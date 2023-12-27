@@ -51,12 +51,24 @@ enemy.draw();
 console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;color:#fff;');
 console.log(player);
 
+const keys = {
+  right: { motion: false },
+  left: { motion: false },
+}
 const animate = () => {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
+
+  if (keys.right.motion) {
+    player.velocity.x = 1;
+  } else if (keys.left.motion) {
+    player.velocity.x = -1;
+  } else {
+    player.velocity.x = 0;
+  };
 }
 
 animate();
@@ -65,14 +77,14 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
   switch (event.key) {
     case "ArrowRight":
     case "l":
-      player.velocity.x = 1;
+      keys.right.motion = true;
+      break;
 
+    case "ArrowLeft":
+    case "h":
+      keys.left.motion = true;
       break;
   }
-  console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
-  console.log(event);
-  console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
-  console.log(event.key);
 
 })
 
@@ -80,8 +92,12 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
   switch (event.key) {
     case "ArrowRight":
     case "l":
-      player.velocity.x = 0;
+      keys.right.motion = false;
+      break;
 
+    case "ArrowLeft":
+    case "h":
+      keys.left.motion = false;
       break;
   }
   console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
