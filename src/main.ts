@@ -32,10 +32,19 @@ class Sprite {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
-    if (this.position.y + this.height + this.velocity.y >= canvas.height) {
+    if (this.position.y + this.height + this.velocity.y >= canvas.height) { // touch the ground
       this.velocity.y = 0;
     } else {
       this.velocity.y += gravity;
+    }
+
+    if (this.position.x + this.velocity.x <= 0 || this.position.x + this.velocity.x >= canvas.width - 50) {
+      this.velocity.x = 0;
+      if (this.position.x >= canvas.width - 50) {
+        this.position.x = canvas.width - 50;
+      } else if (this.position.x <= 0) {
+        this.position.x = 0;
+      }
     }
   }
 };
@@ -92,6 +101,10 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
       last_key = "h";
       keys.left.motion = true;
       break;
+
+    case "ArrowUp":
+    case "k":
+      player.velocity.y = -10;
   }
 
 })
