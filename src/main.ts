@@ -8,6 +8,8 @@ canvas.height = window.innerHeight;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
+const gravity = 0.2;
+
 class Sprite {
 
   position = { x: 0, y: 0 };
@@ -27,6 +29,7 @@ class Sprite {
 
   update() {
     this.draw();
+    this.velocity.y += gravity;
     this.position.y += this.velocity.y;
 
     if (this.position.y + this.height + this.velocity.y >= canvas.height) {
