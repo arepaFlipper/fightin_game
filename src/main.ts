@@ -76,3 +76,17 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
 
 })
 
+window.addEventListener("keyup", (event: KeyboardEvent) => {
+  switch (event.key) {
+    case "ArrowRight":
+    case "l":
+      player.velocity.x = 0;
+
+      break;
+  }
+  console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
+  console.log(event);
+  console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
+  console.log(event.key);
+
+})
