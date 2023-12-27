@@ -55,6 +55,9 @@ const keys = {
   right: { motion: false },
   left: { motion: false },
 }
+
+let last_key: string = "";
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
@@ -63,7 +66,10 @@ const animate = () => {
   enemy.update();
 
   if (keys.right.motion) {
-    player.velocity.x = 1;
+    player.velocity.x += 1;
+    if (last_key === "l") {
+      player.velocity.x += 1;
+    }
   } else if (keys.left.motion) {
     player.velocity.x = -1;
   } else {
@@ -78,10 +84,12 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
     case "ArrowRight":
     case "l":
       keys.right.motion = true;
+      last_key = "l";
       break;
 
     case "ArrowLeft":
     case "h":
+      last_key = "h";
       keys.left.motion = true;
       break;
   }
