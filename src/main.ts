@@ -25,11 +25,11 @@ class Sprite {
 
   update() {
     this.draw();
-    this.position.y += 10;
+    this.position.y += this.velocity.y;
   }
 };
 
-const player = new Sprite({ position: { x: 0, y: 0 }, velocity: { x: 0, y: 0 } });
+const player = new Sprite({ position: { x: 0, y: 0 }, velocity: { x: 0, y: 10 } });
 
 player.draw();
 
