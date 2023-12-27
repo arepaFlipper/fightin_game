@@ -14,12 +14,14 @@ class Sprite {
 
   position = { x: 0, y: 0 };
   velocity = { x: 0, y: 0 };
-  height = 0;
+  height: number = 150;
+  last_key: string = "";
 
   constructor({ position, velocity }: { position: { x: number, y: number }, velocity: { x: number, y: number } }) {
     this.position = position;
     this.velocity = velocity;
-    this.height = 150;
+    this.height;
+    this.last_key;
   };
 
   draw() {
@@ -49,11 +51,11 @@ class Sprite {
   }
 };
 
-const player = new Sprite({ position: { x: 0, y: 0 }, velocity: { x: 0, y: 10 } });
+const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 } });
 
 player.draw();
 
-const enemy = new Sprite({ position: { x: 400, y: 100 }, velocity: { x: 0, y: 0 } });
+const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 } });
 
 enemy.draw();
 
