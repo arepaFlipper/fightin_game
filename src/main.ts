@@ -42,7 +42,8 @@ console.log(player);
 
 const animate = () => {
   window.requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
+  c.fillStyle = "black";
+  c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
 }
