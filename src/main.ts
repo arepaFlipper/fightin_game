@@ -29,6 +29,7 @@ class Sprite {
 
   update() {
     this.draw();
+    this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
     if (this.position.y + this.height + this.velocity.y >= canvas.height) {
@@ -61,9 +62,17 @@ const animate = () => {
 animate();
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
+  switch (event.key) {
+    case "ArrowRight":
+    case "l":
+      player.velocity.x = 1;
+
+      break;
+  }
   console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
   console.log(event);
   console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
   console.log(event.key);
 
 })
+
