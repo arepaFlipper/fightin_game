@@ -23,6 +23,10 @@ const player = new Sprite({ x: 0, y: 0 });
 
 player.draw();
 
+const enemy = new Sprite({ x: 400, y: 100 });
+
+enemy.draw();
+
 console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;color:#fff;');
 console.log(player);
 
