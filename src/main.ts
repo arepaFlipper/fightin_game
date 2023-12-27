@@ -12,9 +12,16 @@ class Sprite {
   constructor(position) {
     this.position = position;
   };
+
+  draw() {
+    c.fillStyle = "red";
+    c.fillRect(this.position.x, this.position.y, 50, 150);
+  };
 };
 
-const player = new Sprite({ x: 0, y: 0 })
+const player = new Sprite({ x: 0, y: 0 });
+
+player.draw();
 
 console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;color:#fff;');
 console.log(player);
