@@ -63,8 +63,10 @@ console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;c
 console.log(player);
 
 const keys = {
-  right: { motion: false },
-  left: { motion: false },
+  player_right: { motion: false },
+  player_left: { motion: false },
+  enemy_right: { motion: false },
+  enemy_left: { motion: false },
 }
 
 let last_key: string = "";
@@ -76,15 +78,17 @@ const animate = () => {
   player.update();
   enemy.update();
 
-  if (keys.right.motion) {
+  if (keys.player_right.motion) {
     player.velocity.x += 1;
-    if (last_key === "l") {
-      player.velocity.x += 1;
-    }
-  } else if (keys.left.motion) {
-    player.velocity.x = -1;
+  } else if (keys.player_left.motion) {
+    player.velocity.x -= 1;
+  } else if (keys.enemy_right.motion) {
+    enemy.velocity.x += 1;
+  } else if (keys.enemy_left.motion) {
+    enemy.velocity.x -= 1;
   } else {
     player.velocity.x = 0;
+    enemy.velocity.x = 0;
   };
 }
 
@@ -92,21 +96,33 @@ animate();
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
   switch (event.key) {
-    case "ArrowRight":
     case "l":
-      keys.right.motion = true;
+      keys.player_right.motion = true;
+      last_key = "l";
+      break;
+
+    case "h":
+      last_key = "h";
+      keys.player_left.motion = true;
+      break;
+
+    case "k":
+      player.velocity.y = -10;
+      break;
+
+    case "ArrowRight":
+      keys.enemy_right.motion = true;
       last_key = "l";
       break;
 
     case "ArrowLeft":
-    case "h":
       last_key = "h";
-      keys.left.motion = true;
+      keys.enemy_left.motion = true;
       break;
 
     case "ArrowUp":
-    case "k":
-      player.velocity.y = -10;
+      enemy.velocity.y = -10;
+      break;
   }
 
 })
@@ -115,12 +131,14 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
   switch (event.key) {
     case "ArrowRight":
     case "l":
-      keys.right.motion = false;
+      keys.player_right.motion = false;
+      keys.enemy_right.motion = false;
       break;
 
     case "ArrowLeft":
     case "h":
-      keys.left.motion = false;
+      keys.player_left.motion = false;
+      keys.enemy_left.motion = false;
       break;
   }
   console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
