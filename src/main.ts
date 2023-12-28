@@ -35,9 +35,10 @@ class Sprite {
     c.fillStyle = this.color;
     c.fillRect(this.position.x, this.position.y, this.width, 150);
 
-    // attack_box
-    // c.fillStyle = "green";
-    c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+    if (this.is_attacking) {
+      c.fillStyle = "green";
+      c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+    }
 
   };
 
