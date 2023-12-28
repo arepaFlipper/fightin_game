@@ -17,8 +17,9 @@ class Sprite {
   height: number = 150;
   width: number = 50;
   last_key: string = "";
-  attack_box = { position: { x: 0, y: 0 }, width: 0, height: 0 };
-  color = "";
+  attack_box = { position: this.position, width: 0, height: 0 };
+  color: string = "";
+  is_attacking: boolean = false;
 
   constructor({ position, velocity, color }: { position: { x: number, y: number }, velocity: { x: number, y: number }, color: string }) {
     this.position = position;
@@ -59,6 +60,13 @@ class Sprite {
         this.position.x = 0;
       }
     }
+  }
+
+  attack() {
+    this.is_attacking = true;
+    setTimeout(() => {
+      this.is_attacking = false;
+    }, 100);
   }
 };
 
@@ -120,6 +128,7 @@ animate();
 
 window.addEventListener("keydown", (event: KeyboardEvent) => {
   switch (event.key) {
+    // player's motions
     case "l":
       keys.player.right.motion = true;
       last_key = "l";
@@ -134,6 +143,11 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
       player.velocity.y = -20;
       break;
 
+    case " ":
+      player.attack();
+      break;
+
+    // enemy's motions
     case "ArrowRight":
       keys.enemy.right.motion = true;
       last_key = "l";
