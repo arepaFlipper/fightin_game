@@ -17,17 +17,17 @@ class Sprite {
   height: number = 150;
   width: number = 50;
   last_key: string = "";
-  attack_box = { position: this.position, width: 0, height: 0 };
+  attack_box = { position: this.position, offset: { x: 0, y: 0 }, width: 0, height: 0 };
   color: string = "";
   is_attacking: boolean = false;
 
-  constructor({ position, velocity, color }: { position: { x: number, y: number }, velocity: { x: number, y: number }, color: string }) {
+  constructor({ position, velocity, color, offset }: { position: { x: number, y: number }, offset: { x: number, y: number }, velocity: { x: number, y: number }, color: string }) {
     this.position = position;
     this.velocity = velocity;
     this.height;
     this.width;
     this.last_key;
-    this.attack_box = { position: this.position, width: 100, height: 50 };
+    this.attack_box = { position: this.position, offset, width: 100, height: 50 };
     this.color = color;
   };
 
@@ -35,17 +35,22 @@ class Sprite {
     c.fillStyle = this.color;
     c.fillRect(this.position.x, this.position.y, this.width, 150);
 
-    if (this.is_attacking) {
-      c.fillStyle = "green";
-      c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
-    }
+    // if (this.is_attacking) {
+    c.fillStyle = "green";
+    c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+    // }
 
   };
 
   update() {
     this.draw();
+    this.attack_box.position.x = this.position.x - 50; // BUG:
+    this.attack_box.position.y = this.position.y;
+
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+
+
 
     if (this.position.y + this.height + this.velocity.y >= canvas.height) { // touch the ground
       this.velocity.y = 0;
@@ -71,11 +76,11 @@ class Sprite {
   }
 };
 
-const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 }, color: "red" });
+const player = new Sprite({ position: { x: 400, y: 0 }, velocity: { x: 0, y: 10 }, color: "red", offset: { x: 0, y: 0 } });
 
 player.draw();
 
-const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: "blue" });
+const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: "blue", offset: { x: -1, y: 0 } });
 
 enemy.draw();
 
