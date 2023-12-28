@@ -109,7 +109,9 @@ const animate = () => {
   const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width
   const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y
   const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height
-  if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player) {
+
+  if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player && (player.is_attacking || enemy.is_attacking)) {
+    player.is_attacking = false; // stop attack but does not work
     console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
   }
 }
