@@ -17,21 +17,23 @@ class Sprite {
   height: number = 150;
   last_key: string = "";
   attack_box = { position: { x: 0, y: 0 }, width: 0, height: 0 };
+  color = "";
 
-  constructor({ position, velocity }: { position: { x: number, y: number }, velocity: { x: number, y: number } }) {
+  constructor({ position, velocity, color }: { position: { x: number, y: number }, velocity: { x: number, y: number }, color: string }) {
     this.position = position;
     this.velocity = velocity;
     this.height;
     this.last_key;
     this.attack_box = { position: this.position, width: 100, height: 50 };
+    this.color = color;
   };
 
   draw() {
-    c.fillStyle = "red";
+    c.fillStyle = this.color;
     c.fillRect(this.position.x, this.position.y, 50, 150);
 
     // attack_box
-    c.fillStyle = "green";
+    // c.fillStyle = "green";
     c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
   };
 
@@ -57,11 +59,11 @@ class Sprite {
   }
 };
 
-const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 } });
+const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 }, color: "red" });
 
 player.draw();
 
-const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 } });
+const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: "blue" });
 
 enemy.draw();
 
