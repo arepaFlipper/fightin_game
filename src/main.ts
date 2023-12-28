@@ -15,6 +15,7 @@ class Sprite {
   position = { x: 0, y: 0 };
   velocity = { x: 0, y: 0 };
   height: number = 150;
+  width: number = 50;
   last_key: string = "";
   attack_box = { position: { x: 0, y: 0 }, width: 0, height: 0 };
   color = "";
@@ -23,6 +24,7 @@ class Sprite {
     this.position = position;
     this.velocity = velocity;
     this.height;
+    this.width;
     this.last_key;
     this.attack_box = { position: this.position, width: 100, height: 50 };
     this.color = color;
@@ -30,7 +32,7 @@ class Sprite {
 
   draw() {
     c.fillStyle = this.color;
-    c.fillRect(this.position.x, this.position.y, 50, 150);
+    c.fillRect(this.position.x, this.position.y, this.width, 150);
 
     // attack_box
     // c.fillStyle = "green";
@@ -68,8 +70,6 @@ const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity
 
 enemy.draw();
 
-console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;color:#fff;');
-console.log(player);
 
 const keys = {
   player: {
@@ -105,7 +105,7 @@ const animate = () => {
   };
   //
   // detect for collisions
-  if (player.attack_box.position.x + player.attack_box.width >= enemy.position.x) {
+  if (player.attack_box.position.x + player.attack_box.width >= enemy.position.x && player.attack_box.position.x <= enemy.position.x + enemy.width) {
     console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
   }
 }
@@ -159,9 +159,5 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
       keys.enemy.left.motion = false;
       break;
   }
-  console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
-  console.log(event);
-  console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
-  console.log(event.key);
 
 })
