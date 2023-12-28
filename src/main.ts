@@ -1,7 +1,7 @@
-import './style.css'
+import './style.css';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#app') as HTMLCanvasElement;
-const c = canvas?.getContext("2d")!;
+const c = canvas?.getContext('2d')!;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -17,7 +17,7 @@ class Sprite {
   height: number = 150;
   width: number = 50;
   last_key: string = "";
-  attack_box = { position: this.position, offset: { x: 0, y: 0 }, width: 0, height: 0 };
+  attack_box = { position: { x: 0, y: 0 }, offset: { x: 0, y: 0 }, width: 100, height: 50 };
   color: string = "";
   is_attacking: boolean = false;
 
@@ -27,7 +27,7 @@ class Sprite {
     this.height;
     this.width;
     this.last_key;
-    this.attack_box = { position: this.position, offset, width: 100, height: 50 };
+    this.attack_box = { position: { x: 0, y: 0 }, offset, width: 100, height: 50 };
     this.color = color;
   };
 
@@ -36,21 +36,18 @@ class Sprite {
     c.fillRect(this.position.x, this.position.y, this.width, 150);
 
     // if (this.is_attacking) {
-    c.fillStyle = "green";
+    c.fillStyle = 'green';
     c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
     // }
-
   };
 
   update() {
     this.draw();
-    this.attack_box.position.x = this.position.x - 50; // BUG:
-    this.attack_box.position.y = this.position.y;
+    this.attack_box.position.x = this.position.x + this.attack_box.offset.x;
+    this.attack_box.position.y = this.position.y + this.attack_box.offset.y;
 
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-
-
 
     if (this.position.y + this.height + this.velocity.y >= canvas.height) { // touch the ground
       this.velocity.y = 0;
@@ -74,16 +71,15 @@ class Sprite {
       this.is_attacking = false;
     }, 100);
   }
-};
+}
 
-const player = new Sprite({ position: { x: 400, y: 0 }, velocity: { x: 0, y: 10 }, color: "red", offset: { x: 0, y: 0 } });
+const player = new Sprite({ position: { x: 400, y: 0 }, velocity: { x: 0, y: 10 }, color: 'red', offset: { x: 0, y: 0 } });
 
 player.draw();
 
-const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: "blue", offset: { x: -1, y: 0 } });
+const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: 'blue', offset: { x: -50, y: 0 } });
 
 enemy.draw();
-
 
 const keys = {
   player: {
@@ -94,13 +90,13 @@ const keys = {
     right: { motion: false },
     left: { motion: false },
   }
-}
+};
 
-let last_key: string = "";
+let last_key: string = '';
 
 const animate = () => {
   window.requestAnimationFrame(animate);
-  c.fillStyle = "black";
+  c.fillStyle = 'black';
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   enemy.update();
@@ -116,76 +112,72 @@ const animate = () => {
   } else {
     player.velocity.x = 0;
     enemy.velocity.x = 0;
-  };
-  //
-  // detect for collisions
-  const player_collides_enemy = player.attack_box.position.x + player.attack_box.width >= enemy.position.x
-  const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width
-  const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y
-  const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height
+  }
+
+  const player_collides_enemy = player.attack_box.position.x + player.attack_box.width >= enemy.position.x;
+  const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width;
+  const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y;
+  const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height;
 
   if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player && (player.is_attacking || enemy.is_attacking)) {
-    player.is_attacking = false; // stop attack but does not work
+    player.is_attacking = false;
     console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
   }
-}
+};
 
 animate();
 
-window.addEventListener("keydown", (event: KeyboardEvent) => {
+window.addEventListener('keydown', (event: KeyboardEvent) => {
   switch (event.key) {
-    // player's motions
-    case "l":
+    case 'l':
       keys.player.right.motion = true;
-      last_key = "l";
+      last_key = 'l';
       break;
 
-    case "h":
-      last_key = "h";
+    case 'h':
+      last_key = 'h';
       keys.player.left.motion = true;
       break;
 
-    case "k":
+    case 'k':
       player.velocity.y = -20;
       break;
 
-    case " ":
+    case ' ':
       player.attack();
       break;
 
-    // enemy's motions
-    case "ArrowRight":
+    case 'ArrowRight':
       keys.enemy.right.motion = true;
-      last_key = "l";
+      last_key = 'l';
       break;
 
-    case "ArrowLeft":
-      last_key = "h";
+    case 'ArrowLeft':
+      last_key = 'h';
       keys.enemy.left.motion = true;
       break;
 
-    case "ArrowUp":
+    case 'ArrowUp':
       enemy.velocity.y = -20;
       break;
   }
+});
 
-})
-
-window.addEventListener("keyup", (event: KeyboardEvent) => {
+window.addEventListener('keyup', (event: KeyboardEvent) => {
   switch (event.key) {
-    case "ArrowRight":
-    case "l":
+    case 'ArrowRight':
+    case 'l':
       keys.player.right.motion = false;
       keys.enemy.right.motion = false;
       break;
 
-    case "ArrowLeft":
-    case "h":
+    case 'ArrowLeft':
+    case 'h':
       keys.player.left.motion = false;
       keys.enemy.left.motion = false;
       break;
   }
   console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
   console.log(event.key);
+});
 
-})
