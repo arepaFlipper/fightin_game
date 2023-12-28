@@ -15,18 +15,29 @@ class Sprite {
   position = { x: 0, y: 0 };
   velocity = { x: 0, y: 0 };
   height: number = 150;
+  width: number = 50;
   last_key: string = "";
+  attack_box = { position: { x: 0, y: 0 }, width: 0, height: 0 };
+  color = "";
 
-  constructor({ position, velocity }: { position: { x: number, y: number }, velocity: { x: number, y: number } }) {
+  constructor({ position, velocity, color }: { position: { x: number, y: number }, velocity: { x: number, y: number }, color: string }) {
     this.position = position;
     this.velocity = velocity;
     this.height;
+    this.width;
     this.last_key;
+    this.attack_box = { position: this.position, width: 100, height: 50 };
+    this.color = color;
   };
 
   draw() {
-    c.fillStyle = "red";
-    c.fillRect(this.position.x, this.position.y, 50, 150);
+    c.fillStyle = this.color;
+    c.fillRect(this.position.x, this.position.y, this.width, 150);
+
+    // attack_box
+    // c.fillStyle = "green";
+    c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+
   };
 
   update() {
@@ -51,22 +62,24 @@ class Sprite {
   }
 };
 
-const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 } });
+const player = new Sprite({ position: { x: 50, y: 0 }, velocity: { x: 0, y: 10 }, color: "red" });
 
 player.draw();
 
-const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 } });
+const enemy = new Sprite({ position: { x: canvas.width - 100, y: 100 }, velocity: { x: 0, y: 0 }, color: "blue" });
 
 enemy.draw();
 
-console.log(`🦚%cmain.ts:19 - player`, 'font-weight:bold; background:#56a900;color:#fff;');
-console.log(player);
 
 const keys = {
-  player_right: { motion: false },
-  player_left: { motion: false },
-  enemy_right: { motion: false },
-  enemy_left: { motion: false },
+  player: {
+    right: { motion: false },
+    left: { motion: false },
+  },
+  enemy: {
+    right: { motion: false },
+    left: { motion: false },
+  }
 }
 
 let last_key: string = "";
@@ -78,18 +91,27 @@ const animate = () => {
   player.update();
   enemy.update();
 
-  if (keys.player_right.motion) {
+  if (keys.player.right.motion) {
     player.velocity.x += 1;
-  } else if (keys.player_left.motion) {
+  } else if (keys.player.left.motion) {
     player.velocity.x -= 1;
-  } else if (keys.enemy_right.motion) {
+  } else if (keys.enemy.right.motion) {
     enemy.velocity.x += 1;
-  } else if (keys.enemy_left.motion) {
+  } else if (keys.enemy.left.motion) {
     enemy.velocity.x -= 1;
   } else {
     player.velocity.x = 0;
     enemy.velocity.x = 0;
   };
+  //
+  // detect for collisions
+  const player_collides_enemy = player.attack_box.position.x + player.attack_box.width >= enemy.position.x
+  const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width
+  const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y
+  const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height
+  if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player) {
+    console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
+  }
 }
 
 animate();
@@ -97,31 +119,31 @@ animate();
 window.addEventListener("keydown", (event: KeyboardEvent) => {
   switch (event.key) {
     case "l":
-      keys.player_right.motion = true;
+      keys.player.right.motion = true;
       last_key = "l";
       break;
 
     case "h":
       last_key = "h";
-      keys.player_left.motion = true;
+      keys.player.left.motion = true;
       break;
 
     case "k":
-      player.velocity.y = -10;
+      player.velocity.y = -20;
       break;
 
     case "ArrowRight":
-      keys.enemy_right.motion = true;
+      keys.enemy.right.motion = true;
       last_key = "l";
       break;
 
     case "ArrowLeft":
       last_key = "h";
-      keys.enemy_left.motion = true;
+      keys.enemy.left.motion = true;
       break;
 
     case "ArrowUp":
-      enemy.velocity.y = -10;
+      enemy.velocity.y = -20;
       break;
   }
 
@@ -131,18 +153,16 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
   switch (event.key) {
     case "ArrowRight":
     case "l":
-      keys.player_right.motion = false;
-      keys.enemy_right.motion = false;
+      keys.player.right.motion = false;
+      keys.enemy.right.motion = false;
       break;
 
     case "ArrowLeft":
     case "h":
-      keys.player_left.motion = false;
-      keys.enemy_left.motion = false;
+      keys.player.left.motion = false;
+      keys.enemy.left.motion = false;
       break;
   }
-  console.log(`🎼 %cmain.ts:64 - event`, 'font-weight:bold; background:#a65900;color:#fff;');
-  console.log(event);
   console.log(`🍟%cmain.ts:66 - event.key`, 'font-weight:bold; background:#a85700;color:#fff;');
   console.log(event.key);
 
