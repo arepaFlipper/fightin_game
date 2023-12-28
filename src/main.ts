@@ -35,6 +35,7 @@ class Sprite {
     // attack_box
     // c.fillStyle = "green";
     c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+
   };
 
   update() {
@@ -102,6 +103,11 @@ const animate = () => {
     player.velocity.x = 0;
     enemy.velocity.x = 0;
   };
+  //
+  // detect for collisions
+  if (player.attack_box.position.x + player.attack_box.width >= enemy.position.x) {
+    console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
+  }
 }
 
 animate();
