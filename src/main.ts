@@ -107,7 +107,9 @@ const animate = () => {
   // detect for collisions
   const player_collides_enemy = player.attack_box.position.x + player.attack_box.width >= enemy.position.x
   const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width
-  if (player_collides_enemy && enemy_collides_player) {
+  const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y
+  const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height
+  if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player) {
     console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
   }
 }
