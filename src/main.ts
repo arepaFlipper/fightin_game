@@ -16,17 +16,23 @@ class Sprite {
   velocity = { x: 0, y: 0 };
   height: number = 150;
   last_key: string = "";
+  attack_box = { position: { x: 0, y: 0 }, width: 0, height: 0 };
 
   constructor({ position, velocity }: { position: { x: number, y: number }, velocity: { x: number, y: number } }) {
     this.position = position;
     this.velocity = velocity;
     this.height;
     this.last_key;
+    this.attack_box = { position: this.position, width: 100, height: 50 };
   };
 
   draw() {
     c.fillStyle = "red";
     c.fillRect(this.position.x, this.position.y, 50, 150);
+
+    // attack_box
+    c.fillStyle = "green";
+    c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
   };
 
   update() {
