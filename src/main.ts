@@ -1,6 +1,6 @@
 import './style.css';
 
-const canvas = document.querySelector<HTMLCanvasElement>('#app') as HTMLCanvasElement;
+const canvas = document.querySelector<HTMLCanvasElement>('#canvas') as HTMLCanvasElement;
 const c = canvas?.getContext('2d')!;
 
 canvas.width = window.innerWidth;

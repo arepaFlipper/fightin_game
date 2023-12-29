@@ -1,3 +1,18 @@
 body {
   margin: 0;
 }
+
+#app {
+  position: relative;
+}
+
+#ui {
+  position: absolute;
+}
+
+#player_health {
+  background-color: yellow;
+  height: 30px;
+  width: 30px;
+}
+
