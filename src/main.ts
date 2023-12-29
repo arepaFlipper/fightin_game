@@ -133,7 +133,7 @@ const animate = () => {
 
   if (rectangular_collision({ attacker: player, target: enemy })) {
     player.is_attacking = false;
-    console.log(`🥈%cmain.ts:41 - player is attacking!!`, 'font-weight:bold; background:#897600;color:#fff;');
+    (document.querySelector('#enemy_health') as HTMLDivElement).style.width = `20%`;
   }
 
   if (rectangular_collision({ attacker: enemy, target: player })) {

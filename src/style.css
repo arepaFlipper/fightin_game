@@ -20,12 +20,6 @@ body {
   
 }
 
-#player_health, #enemy_health {
-  background-color: yellow;
-  height: 30px;
-  width: 100%;
-}
-
 #timer {
   background-color: red;
   height: 100px;
