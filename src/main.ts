@@ -35,10 +35,10 @@ class Sprite {
     c.fillStyle = this.color;
     c.fillRect(this.position.x, this.position.y, this.width, 150);
 
-    // if (this.is_attacking) {
-    c.fillStyle = 'green';
-    c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
-    // }
+    if (this.is_attacking) {
+      c.fillStyle = 'green';
+      c.fillRect(this.attack_box.position.x, this.attack_box.position.y, this.attack_box.width, this.attack_box.height);
+    }
   };
 
   update() {
@@ -94,6 +94,22 @@ const keys = {
 
 let last_key: string = '';
 
+const rectangular_collision = ({ attacker, target }: { attacker: Sprite, target: Sprite }) => {
+  const attackerCollidesTargetX = attacker.attack_box.position.x + attacker.attack_box.width >= target.position.x;
+  const targetCollidesAttackerX = attacker.attack_box.position.x <= target.position.x + target.width;
+  const attackerCollidesTargetY = attacker.attack_box.position.y + attacker.attack_box.height >= target.position.y;
+  const targetCollidesAttackerY = attacker.attack_box.position.y <= target.position.y + target.height;
+
+  return (
+    attackerCollidesTargetX &&
+    targetCollidesAttackerX &&
+    attackerCollidesTargetY &&
+    targetCollidesAttackerY &&
+    attacker.is_attacking
+  );
+};
+
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   c.fillStyle = 'black';
@@ -114,14 +130,14 @@ const animate = () => {
     enemy.velocity.x = 0;
   }
 
-  const player_collides_enemy = player.attack_box.position.x + player.attack_box.width >= enemy.position.x;
-  const enemy_collides_player = player.attack_box.position.x <= enemy.position.x + enemy.width;
-  const player_jump_collides_enemy = player.attack_box.position.y + player.attack_box.height >= enemy.position.y;
-  const enemy_jump_collides_player = player.attack_box.position.y <= enemy.position.y + enemy.height;
 
-  if (player_collides_enemy && enemy_collides_player && player_jump_collides_enemy && enemy_jump_collides_player && (player.is_attacking || enemy.is_attacking)) {
+  if (rectangular_collision({ attacker: player, target: enemy })) {
     player.is_attacking = false;
-    console.log(`🥈%cmain.ts:41 - Collision Detected!!`, 'font-weight:bold; background:#897600;color:#fff;');
+    console.log(`🥈%cmain.ts:41 - player is attacking!!`, 'font-weight:bold; background:#897600;color:#fff;');
+  }
+
+  if (rectangular_collision({ attacker: enemy, target: player })) {
+    enemy.is_attacking = false;
   }
 };
 
@@ -159,6 +175,10 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
 
     case 'ArrowUp':
       enemy.velocity.y = -20;
+      break;
+
+    case 'AltGraph':
+      enemy.attack();
       break;
   }
 });
