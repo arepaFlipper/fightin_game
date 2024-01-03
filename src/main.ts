@@ -139,34 +139,30 @@ const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target
 };
 
 let timer = 60;
+const determine_winner = ({player, enemy}: {player: Sprite; enemy: Sprite})=> {
+  if(player.health === enemy.health){
+    document.querySelector<HTMLDivElement>("#sign")!.innerHTML = "Tie";
+  } else if (player.health > enemy.health){
+    document.querySelector<HTMLDivElement>("#sign")!.innerHTML = "Enemy wins";
+  } else if (player.health < enemy.health){
+    document.querySelector<HTMLDivElement>("#sign")!.innerHTML = "Player wins";
+  }
+
+  document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
+}
+
 const decrease_timer = () => {
-  setTimeout(decrease_timer, 1000);
-  if(timer > 0 && (player.health >= 0 && enemy.health >= 0)) {
+  if(timer > 0){
+    setTimeout(decrease_timer, 1000);
     timer--;
-    document.querySelector("#timer")!.innerHTML = timer.toString();
+    document.querySelector<HTMLDivElement>("#timer")!.innerHTML = timer.toString();
   }
 
-  let sign_text: string = "TIE";
-  if (timer===0){
-
-    if(player.health > enemy.health){
-      sign_text = "PLAYER WINS";
-    } else if (enemy.health > player.health){
-      sign_text = "ENEMY WINS";
-    } else {
-      sign_text ="TIE!";
-    }
+  if(timer === 0) {
     document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
-  } else if (player.health <= 0) {
-      sign_text = "ENEMY WINS";
-      document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
-      document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
-  } else if (enemy.health <= 0) {
-      sign_text = "PLAYER WINS";
-      document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
-      document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
+    determine_winner({player, enemy});
   }
-  document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
+  
 }
 
 decrease_timer();
@@ -195,12 +191,20 @@ const animate = () => {
     player.is_attacking = false;
     enemy.health -= 20;
     (document.querySelector("#enemy_health") as HTMLDivElement).style.width = `${enemy.health}%`;
+
+    if(enemy.health <= 0 ){
+      determine_winner({player, enemy});
+    }
   }
 
   if (rectangular_collision({ attacker: enemy, target: player })) {
     enemy.is_attacking = false;
     player.health -= 20;
     (document.querySelector("#player_health") as HTMLDivElement).style.width = `${player.health}%`;
+
+    if(player.health <=0){
+      determine_winner({player, enemy});
+    }
   }
 };
 
@@ -260,6 +264,4 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
       keys.enemy.left.motion = false;
       break;
   }
-  console.log( `🍟%cmain.ts:66 - event.key`, "font-weight:bold; background:#a85700;color:#fff;",);
-  console.log(event.key);
 });
