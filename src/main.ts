@@ -138,17 +138,17 @@ const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target
   );
 };
 
-let timer = 10;
+let timer = 60;
 const decrease_timer = () => {
   setTimeout(decrease_timer, 1000);
-  if(timer > 0) {
+  if(timer > 0 && (player.health >= 0 && enemy.health >= 0)) {
     timer--;
     document.querySelector("#timer")!.innerHTML = timer.toString();
   }
 
+  let sign_text: string = "TIE";
   if (timer===0){
 
-    let sign_text: string = "TIE";
     if(player.health > enemy.health){
       sign_text = "PLAYER WINS";
     } else if (enemy.health > player.health){
@@ -156,10 +156,17 @@ const decrease_timer = () => {
     } else {
       sign_text ="TIE!";
     }
-
-    document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
     document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
+  } else if (player.health <= 0) {
+      sign_text = "ENEMY WINS";
+      document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
+      document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
+  } else if (enemy.health <= 0) {
+      sign_text = "PLAYER WINS";
+      document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
+      document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
   }
+  document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
 }
 
 decrease_timer();
