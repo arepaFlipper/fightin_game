@@ -138,6 +138,32 @@ const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target
   );
 };
 
+let timer = 10;
+const decrease_timer = () => {
+  setTimeout(decrease_timer, 1000);
+  if(timer > 0) {
+    timer--;
+    document.querySelector("#timer")!.innerHTML = timer.toString();
+  }
+
+  if (timer===0){
+
+    let sign_text: string = "TIE";
+    if(player.health > enemy.health){
+      sign_text = "PLAYER WINS";
+    } else if (enemy.health > player.health){
+      sign_text = "ENEMY WINS";
+    } else {
+      sign_text ="TIE!";
+    }
+
+    document.querySelector<HTMLDivElement>("#sign")!.innerHTML = sign_text;
+    document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
+  }
+}
+
+decrease_timer();
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";

@@ -11,18 +11,21 @@
   <body>
     <div id="app">
       <div id="ui">
+
         <div class="relative h-[30px] w-[100%] flex flex-end">
           <div id="player_health" class="absolute bg-[green] right-0 bottom-0 top-0 w-[100%]"></div>
           <div class="bg-yellow-500 h-[30px] w-[100%]"></div>
         </div>
 
-        <div class="bg-[red] h-[100px] w-[100px] shrink-0"></div>
+        <div id="timer" class="bg-[red] h-[100px] w-[100px] shrink-0 flex items-center justify-center">10</div>
 
         <div class="relative w-[100%] h-[30px]">
           <div id="enemy_health" class="absolute bg-blue-500 w-[100%] bottom-0 top-0 left-0" ></div>
           <div class="h-[30px] bg-yellow-500 w-[100%]"></div>
         </div>
       </div>
+
+      <div id="sign" class="absolute text-white hidden items-center justify-center top-0 left-0 right-0 bottom-0"> Tie </div>
       <canvas id="canvas"></canvas>
     </div>
     <script type="module" src="/src/main.ts"></script>
