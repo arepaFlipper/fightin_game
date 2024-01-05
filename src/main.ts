@@ -139,7 +139,10 @@ const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target
 };
 
 let timer = 60;
-const determine_winner = ({player, enemy}: {player: Sprite; enemy: Sprite})=> {
+let timer_id: number;
+
+const determine_winner = ({player, enemy, timer_id}: {player: Sprite; enemy: Sprite; timer_id: number})=> {
+  clearTimeout(timer_id);
   if(player.health === enemy.health){
     document.querySelector<HTMLDivElement>("#sign")!.innerHTML = "Tie";
   } else if (player.health > enemy.health){
@@ -153,14 +156,14 @@ const determine_winner = ({player, enemy}: {player: Sprite; enemy: Sprite})=> {
 
 const decrease_timer = () => {
   if(timer > 0){
-    setTimeout(decrease_timer, 1000);
+    timer_id = setTimeout(decrease_timer, 1000);
     timer--;
     document.querySelector<HTMLDivElement>("#timer")!.innerHTML = timer.toString();
   }
 
   if(timer === 0) {
     document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
-    determine_winner({player, enemy});
+    determine_winner({player, enemy, timer_id});
   }
   
 }
@@ -193,7 +196,7 @@ const animate = () => {
     (document.querySelector("#enemy_health") as HTMLDivElement).style.width = `${enemy.health}%`;
 
     if(enemy.health <= 0 ){
-      determine_winner({player, enemy});
+      determine_winner({player, enemy, timer_id});
     }
   }
 
@@ -203,7 +206,7 @@ const animate = () => {
     (document.querySelector("#player_health") as HTMLDivElement).style.width = `${player.health}%`;
 
     if(player.health <=0){
-      determine_winner({player, enemy});
+      determine_winner({player, enemy, timer_id});
     }
   }
 };
