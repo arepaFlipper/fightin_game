@@ -92,6 +92,39 @@ class Sprite {
   }
 }
 
+
+class Fighter {
+  position = { x: 0, y: 0 };
+  velocity = { x: 0, y: 0 };
+  height: number = 150;
+  width: number = 50;
+  last_key: string = "";
+  attack_box = {
+    position: { x: 0, y: 0 },
+    offset: { x: 0, y: 0 },
+    width: 100,
+    height: 50,
+  };
+  color: string = "";
+  is_attacking: boolean = false;
+  health: number =100;
+
+  constructor({ position }: { position: { x: number; y: number } }) {
+    this.position = position;
+    this.height;
+    this.width;
+  }
+
+  draw() {
+    
+  }
+
+  update() {
+    this.draw();
+  }
+
+}
+
 const player = new Sprite({
   position: { x: 400, y: 0 },
   velocity: { x: 0, y: 10 },

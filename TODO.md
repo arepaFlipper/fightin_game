@@ -6,7 +6,8 @@
 [x] Health Bar interface.
 
 ## Sprites and Animation
-[ ] Background Sprite.
+[x] Background Sprite.
+  [ ] Character Sprite.
 [ ] Shop Sprite w/ animation.
 [ ] Player Sprite (Samurai Hack).
 [ ] Enemy Sprite.
