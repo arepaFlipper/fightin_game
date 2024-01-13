@@ -20,7 +20,7 @@ const player = new Fighter({
 player.draw();
 
 const enemy = new Fighter({
-  position: { x: canvas.width *(4/5) , y: 100 },
+  position: { x: canvas.width *(4/5) , y: 0 },
   velocity: { x: 0, y: 0 },
   color: "blue",
   offset: { x: -50, y: 0 },
@@ -146,7 +146,7 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
       break;
 
     case "k":
-      enemy.velocity.y = -15;
+      enemy.velocity.y = -14;
       break;
 
     case "AltGraph":
@@ -167,7 +167,7 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
 
     case "d":
     case "ArrowUp":
-      player.velocity.y = -15;
+      player.velocity.y = -14;
       break;
 
     case " ":
