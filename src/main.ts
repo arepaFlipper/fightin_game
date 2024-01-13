@@ -130,51 +130,56 @@ animate();
 window.addEventListener("keydown", (event: KeyboardEvent) => {
   switch (event.key) {
     case "l":
-      keys.player.right.motion = true;
+      keys.enemy.right.motion = true;
       last_key = "l";
       break;
 
     case "h":
       last_key = "h";
-      keys.player.left.motion = true;
-      break;
-
-    case "k":
-      player.velocity.y = -20;
-      break;
-
-    case " ":
-      player.attack();
-      break;
-
-    case "ArrowRight":
-      keys.enemy.right.motion = true;
-      last_key = "l";
-      break;
-
-    case "ArrowLeft":
-      last_key = "h";
       keys.enemy.left.motion = true;
       break;
 
-    case "ArrowUp":
-      enemy.velocity.y = -20;
+    case "k":
+      enemy.velocity.y = -15;
       break;
 
     case "AltGraph":
       enemy.attack();
+      break;
+
+    case "g":
+    case "ArrowRight":
+      keys.player.right.motion = true;
+      last_key = "g";
+      break;
+
+    case "s":
+    case "ArrowLeft":
+      last_key = "a";
+      keys.player.left.motion = true;
+      break;
+
+    case "d":
+    case "ArrowUp":
+      player.velocity.y = -15;
+      break;
+
+    case " ":
+      player.attack();
       break;
   }
 });
 
 window.addEventListener("keyup", (event: KeyboardEvent) => {
   switch (event.key) {
+    case "g":
     case "ArrowRight":
     case "l":
       keys.player.right.motion = false;
       keys.enemy.right.motion = false;
       break;
 
+    case "s":
     case "ArrowLeft":
     case "h":
       keys.player.left.motion = false;
