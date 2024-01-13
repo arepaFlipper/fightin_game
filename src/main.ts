@@ -5,8 +5,12 @@ import { canvas, c, gravity } from "@/js/canvas";
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const background = new Sprite({
+  position: { x: 0, y: 0 },
+  image_src: "./img/background.png"
+});
 
-const player = new Sprite({
+const player = new Fighter({
   position: { x: canvas.width / 5  , y: 0 },
   velocity: { x: 0, y: 10 },
   color: "green",
@@ -15,7 +19,7 @@ const player = new Sprite({
 
 player.draw();
 
-const enemy = new Sprite({
+const enemy = new Fighter({
   position: { x: canvas.width *(4/5) , y: 100 },
   velocity: { x: 0, y: 0 },
   color: "blue",
@@ -37,7 +41,7 @@ const keys = {
 
 let last_key: string = "";
 
-const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target: Sprite; }) => {
+const rectangular_collision = ({ attacker, target, }: { attacker: Fighter; target: Fighter; }) => {
   const attackerCollidesTargetX = attacker.attack_box.position.x + attacker.attack_box.width >= target.position.x;
   const targetCollidesAttackerX = attacker.attack_box.position.x <= target.position.x + target.width;
   const attackerCollidesTargetY = attacker.attack_box.position.y + attacker.attack_box.height >= target.position.y;
@@ -55,7 +59,7 @@ const rectangular_collision = ({ attacker, target, }: { attacker: Sprite; target
 let timer = 60;
 let timer_id: number;
 
-const determine_winner = ({player, enemy, timer_id}: {player: Sprite; enemy: Sprite; timer_id: number})=> {
+const determine_winner = ({player, enemy, timer_id}: {player: Fighter; enemy: Fighter; timer_id: number})=> {
   clearTimeout(timer_id);
   if(player.health === enemy.health){
     document.querySelector<HTMLDivElement>("#sign")!.innerHTML = "Tie";
@@ -88,6 +92,8 @@ const animate = () => {
   window.requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
+
+  background.update();
   player.update();
   enemy.update();
 

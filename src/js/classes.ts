@@ -1,5 +1,31 @@
 import { canvas, c, gravity } from "./canvas";
+
 export class Sprite {
+  position = { x: 0, y: 0 };
+  height: number = window.innerHeight;
+  width: number = window.innerWidth;
+  image_src: string = "";
+  image: HTMLImageElement = new Image();
+
+  constructor({ position, image_src }: { position: { x: number; y: number }, image_src: string }) {
+    this.position = position;
+    this.height;
+    this.width;
+    this.image;
+    this.image.src = image_src;
+  }
+
+  draw() {
+    c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+  }
+
+  update() {
+    this.draw();
+  }
+
+}
+
+export class Fighter {
   position = { x: 0, y: 0 };
   velocity = { x: 0, y: 0 };
   height: number = 150;
@@ -79,36 +105,4 @@ export class Sprite {
   }
 }
 
-
-export class Fighter {
-  position = { x: 0, y: 0 };
-  velocity = { x: 0, y: 0 };
-  height: number = 150;
-  width: number = 50;
-  last_key: string = "";
-  attack_box = {
-    position: { x: 0, y: 0 },
-    offset: { x: 0, y: 0 },
-    width: 100,
-    height: 50,
-  };
-  color: string = "";
-  is_attacking: boolean = false;
-  health: number =100;
-
-  constructor({ position }: { position: { x: number; y: number } }) {
-    this.position = position;
-    this.height;
-    this.width;
-  }
-
-  draw() {
-    
-  }
-
-  update() {
-    this.draw();
-  }
-
-}
 
