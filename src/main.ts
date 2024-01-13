@@ -7,7 +7,7 @@ canvas.height = window.innerHeight;
 
 
 const player = new Sprite({
-  position: { x: 400, y: 0 },
+  position: { x: canvas.width / 5  , y: 0 },
   velocity: { x: 0, y: 10 },
   color: "green",
   offset: { x: 0, y: 0 },
@@ -16,7 +16,7 @@ const player = new Sprite({
 player.draw();
 
 const enemy = new Sprite({
-  position: { x: canvas.width - 100, y: 100 },
+  position: { x: canvas.width *(4/5) , y: 100 },
   velocity: { x: 0, y: 0 },
   color: "blue",
   offset: { x: -50, y: 0 },
