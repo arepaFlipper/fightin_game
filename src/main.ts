@@ -1,10 +1,12 @@
 import "./style.css";
 import { Sprite, Fighter } from "@/js/classes";
 import { canvas, c, gravity } from "@/js/canvas";
-import { rectangular_collision, determine_winner, decrease_timer } from "@/js/utils";
+import { rectangular_collision, determine_winner, decrease_timer, timer_id } from "@/js/utils";
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+let last_key: string = "";
 
 const background = new Sprite({
   position: { x: 0, y: 0 },
@@ -40,11 +42,8 @@ const keys = {
   },
 };
 
-let last_key: string = "";
-let timer_id: number = 0;
 
-
-decrease_timer();
+decrease_timer({player, enemy });
 
 const animate = () => {
   window.requestAnimationFrame(animate);

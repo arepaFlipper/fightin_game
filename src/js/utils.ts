@@ -30,18 +30,21 @@ export const determine_winner = ({player, enemy, timer_id}: {player: Fighter; en
 }
 
 let timer: number = 60;
-let timer_id:number;
+export let timer_id:number;
 
-export const decrease_timer = () => {
+export let last_key: string = "";
+
+export const decrease_timer = ({player, enemy }: {player: Fighter; enemy: Fighter; }) => {
   if(timer > 0){
-    timer_id = setTimeout(decrease_timer, 1000);
+    
+    timer_id = setTimeout(() => decrease_timer({player, enemy }), 1000);
     timer--;
     document.querySelector<HTMLDivElement>("#timer")!.innerHTML = timer.toString();
   }
 
   if(timer === 0) {
     document.querySelector<HTMLDivElement>("#sign")!.style.display = "flex";
-    // determine_winner({player, enemy, timer_id});
+    determine_winner({player, enemy, timer_id});
   }
   
 }
