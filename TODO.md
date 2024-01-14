@@ -7,7 +7,7 @@
 
 ## Sprites and Animation
 [x] Background Sprite.
-  [ ] Character Sprite.
+  [x] Character Sprite.
 [ ] Shop Sprite w/ animation.
 [ ] Player Sprite (Samurai Hack).
 [ ] Enemy Sprite.

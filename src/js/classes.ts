@@ -77,7 +77,7 @@ export class Fighter {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
-    if (this.position.y + this.height + this.velocity.y >= canvas.height - 140 ) {
+    if (this.position.y + this.height + this.velocity.y >= canvas.height * (.835) ) {
       // touch the ground
       this.velocity.y = 0;
     } else {
