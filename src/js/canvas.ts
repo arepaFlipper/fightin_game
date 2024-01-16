@@ -1,7 +1,5 @@
-export const canvas = document.querySelector<HTMLCanvasElement>(
-  "#canvas",
-) as HTMLCanvasElement;
-export const c = canvas?.getContext("2d")!;
+export const canvas = document.querySelector<HTMLCanvasElement>("#canvas") as HTMLCanvasElement;
+export const c = canvas?.getContext("2d") as CanvasRenderingContext2D;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
