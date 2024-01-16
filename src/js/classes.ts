@@ -27,7 +27,7 @@ export class Sprite {
     this.scale = scale || 1;
     this.image.width = (width || this.width) * this.scale;
     this.image.height = (height || this.height) * this.scale;
-    this.frame_max = frame_max;
+    this.frame_max = frame_max || this.frame_max;
   }
 
   draw() {
@@ -36,8 +36,8 @@ export class Sprite {
       this.image,
       this.position.x,
       this.position.y,
-      this.image.width,
-      this.image.height
+      this.image.width * this.scale,
+      this.image.height * this.scale
     );
   }
 
