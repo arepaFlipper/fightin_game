@@ -1,26 +1,44 @@
 import { canvas, c, gravity } from "./canvas";
 
+type TSprite = {
+  position: { x: number; y: number; };
+  image_src: string;
+  width: number;
+  height: number;
+  scale?: number;
+  frame_max?: number;
+};
+
 export class Sprite {
   position = { x: 0, y: 0 };
-  height: number = window.innerHeight;
-  width: number = window.innerWidth;
+  width: number = 0;
+  height: number = 0;
   image_src: string = "";
   image: HTMLImageElement = new Image();
   scale: number = 1;
+  frame_max: number = 1;
 
-  constructor({ position, image_src, width, height, scale }: { position: { x: number; y: number }, image_src: string, width?: number, height?: number, scale?: number }) {
+  constructor({ position, image_src, width, height, scale, frame_max }: TSprite) {
     this.position = position;
-    this.height;
     this.width;
+    this.height;
     this.image;
     this.image.src = image_src;
     this.scale = scale || 1;
     this.image.width = (width || this.width) * this.scale;
     this.image.height = (height || this.height) * this.scale;
+    this.frame_max = frame_max;
   }
 
   draw() {
-    c.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height );
+    // c.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height );
+    c.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.image.width,
+      this.image.height
+    );
   }
 
   update() {

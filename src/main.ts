@@ -10,7 +10,9 @@ let last_key: string = "";
 
 const background = new Sprite({
   position: { x: 0, y: 0 },
-  image_src: "./img/background.png"
+  image_src: "./img/background.png",
+  width: canvas.width,
+  height: canvas.height,
 });
 
 const shop = new Sprite({
