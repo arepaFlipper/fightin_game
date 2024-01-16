@@ -36,8 +36,7 @@ export let last_key: string = "";
 
 export const decrease_timer = ({player, enemy }: {player: Fighter; enemy: Fighter; }) => {
   if(timer > 0){
-    
-    timer_id = setTimeout(() => decrease_timer({player, enemy }), 1000);
+    setTimeout(() => decrease_timer({player, enemy }), 1000);
     timer--;
     document.querySelector<HTMLDivElement>("#timer")!.innerHTML = timer.toString();
   }
