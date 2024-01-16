@@ -6,17 +6,21 @@ export class Sprite {
   width: number = window.innerWidth;
   image_src: string = "";
   image: HTMLImageElement = new Image();
+  scale: number = 1;
 
-  constructor({ position, image_src }: { position: { x: number; y: number }, image_src: string }) {
+  constructor({ position, image_src, width, height, scale }: { position: { x: number; y: number }, image_src: string, width?: number, height?: number, scale?: number }) {
     this.position = position;
     this.height;
     this.width;
     this.image;
     this.image.src = image_src;
+    this.scale = scale || 1;
+    this.image.width = (width || this.width) * this.scale;
+    this.image.height = (height || this.height) * this.scale;
   }
 
   draw() {
-    c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+    c.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height );
   }
 
   update() {
