@@ -20,7 +20,7 @@ const shop = new Sprite({
   image_src: "./img/shop.png",
   width: canvas.width*(35/50),
   height: canvas.height*(7/50),
-  scale: 1.66
+  scale: 2.75
 });
 
 const player = new Fighter({

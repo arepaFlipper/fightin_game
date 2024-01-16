@@ -25,8 +25,8 @@ export class Sprite {
     this.image;
     this.image.src = image_src;
     this.scale = scale || 1;
-    this.image.width = (width || this.width) * this.scale;
-    this.image.height = (height || this.height) * this.scale;
+    this.image.width = (width || this.width);
+    this.image.height = (height || this.height);
     this.frame_max = frame_max || this.frame_max;
   }
 
