@@ -16,7 +16,7 @@ export class Sprite {
   image_src: string = "";
   image: HTMLImageElement = new Image();
   scale: number = 1;
-  frame_max: number = 1;
+  frame_max?: number = 1;
 
   constructor({ position, image_src, width, height, scale, frame_max }: TSprite) {
     this.position = position;
@@ -24,20 +24,20 @@ export class Sprite {
     this.height;
     this.image;
     this.image.src = image_src;
-    this.scale = scale || 1;
-    this.image.width = (width || this.width);
-    this.image.height = (height || this.height);
+    this.scale = scale;
+    this.image.width = width;
+    this.image.height = height;
     this.frame_max = frame_max || this.frame_max;
   }
 
   draw() {
-    // c.drawImage(this.image, this.position.x, this.position.y, this.image.width, this.image.height );
     c.drawImage(
       this.image,
+      0,0,118,150,
       this.position.x,
       this.position.y,
-      this.image.width * this.scale,
-      this.image.height * this.scale
+      this.image.width* (.5),
+      this.image.height *(3.2)
     );
   }
 
@@ -46,6 +46,45 @@ export class Sprite {
   }
 
 }
+
+export class Background {
+  position = { x: 0, y: 0 };
+  width: number = 0;
+  height: number = 0;
+  image_src: string = "";
+  image: HTMLImageElement = new Image();
+  scale: number = 1;
+  frame_max?: number = 1;
+
+  constructor({ position, image_src, width, height, scale, frame_max }: TSprite) {
+    this.position = position;
+    this.width;
+    this.height;
+    this.image;
+    this.image.src = image_src;
+    this.scale = scale || 1;
+    this.image.width = width;
+    this.image.height = height;
+    this.frame_max = frame_max || this.frame_max;
+  };
+
+  draw() {
+    c.drawImage(
+      this.image,
+      // 0,0,this.image.width,this.image.height,
+      this.position.x,
+      this.position.y,
+      this.image.width,
+      this.image.height 
+    );
+  };
+
+  update() {
+    this.draw();
+  };
+
+}
+
 
 export class Fighter {
   position = { x: 0, y: 0 };

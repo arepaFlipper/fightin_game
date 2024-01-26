@@ -1,5 +1,5 @@
 import "./style.css";
-import { Sprite, Fighter } from "@/js/classes";
+import { Sprite, Fighter, Background } from "@/js/classes";
 import { canvas, c, gravity } from "@/js/canvas";
 import { rectangular_collision, determine_winner, decrease_timer, timer_id } from "@/js/utils";
 
@@ -8,11 +8,12 @@ canvas.height = window.innerHeight;
 
 let last_key: string = "";
 
-const background = new Sprite({
+const background = new Background({
   position: { x: 0, y: 0 },
   image_src: "./img/background.png",
   width: canvas.width,
   height: canvas.height,
+  scale: 5.875,
 });
 
 const shop = new Sprite({
@@ -20,7 +21,8 @@ const shop = new Sprite({
   image_src: "./img/shop.png",
   width: canvas.width*(35/50),
   height: canvas.height*(7/50),
-  scale: 2.75
+  scale: 2.75,
+  frame_max: 1
 });
 
 const player = new Fighter({
