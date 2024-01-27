@@ -5,8 +5,16 @@ type TSprite = {
   image_src: string;
   width: number;
   height: number;
-  scale?: number;
-  frame_max?: number;
+  scale: number;
+  frames_max: number;
+};
+
+type TBackground = {
+  position: { x: number; y: number; };
+  image_src: string;
+  width: number;
+  height: number;
+  scale: number;
 };
 
 export class Sprite {
@@ -16,9 +24,9 @@ export class Sprite {
   image_src: string = "";
   image: HTMLImageElement = new Image();
   scale: number = 1;
-  frame_max?: number = 1;
+  frames_max: number = 0;
 
-  constructor({ position, image_src, width, height, scale, frame_max }: TSprite) {
+  constructor({ position, image_src, width, height, scale = 1, frames_max }: TSprite) {
     this.position = position;
     this.width;
     this.height;
@@ -27,17 +35,22 @@ export class Sprite {
     this.scale = scale;
     this.image.width = width;
     this.image.height = height;
-    this.frame_max = frame_max || this.frame_max;
+    this.frames_max = frames_max; 
   }
 
   draw() {
+    //drawImage(image: CanvasImageSource, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number)
+    const s_w = 1/25;
+    const d_w = 1/8;
+    const [sx, sy] = [0,0];
+    const [dx, dy] = [this.position.x,this.position.y]
+    const [sw, sh] = [(this.image.width *(383*6/(canvas.width*this.frames_max)) ) ,this.image.height]
+    const [dw, dh] = [(this.image.width*6/(this.frames_max)),this.image.height*(this.scale)]
     c.drawImage(
       this.image,
-      0,0,118,150,
-      this.position.x,
-      this.position.y,
-      this.image.width* (.5),
-      this.image.height *(3.2)
+      sx,sy,sw, sh,
+      dx, dy,
+      dw,dh
     );
   }
 
@@ -54,9 +67,9 @@ export class Background {
   image_src: string = "";
   image: HTMLImageElement = new Image();
   scale: number = 1;
-  frame_max?: number = 1;
+  frames_max?: number = 1;
 
-  constructor({ position, image_src, width, height, scale, frame_max }: TSprite) {
+  constructor({ position, image_src, width, height, scale }: TBackground) {
     this.position = position;
     this.width;
     this.height;
@@ -65,7 +78,6 @@ export class Background {
     this.scale = scale || 1;
     this.image.width = width;
     this.image.height = height;
-    this.frame_max = frame_max || this.frame_max;
   };
 
   draw() {

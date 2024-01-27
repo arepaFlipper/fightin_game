@@ -19,10 +19,10 @@ const background = new Background({
 const shop = new Sprite({
   position: { x: canvas.width*(30/50), y: canvas.height*(22.5/50) },
   image_src: "./img/shop.png",
-  width: canvas.width*(35/50),
-  height: canvas.height*(7/50),
-  scale: 2.75,
-  frame_max: 1
+  width: canvas.width * (.31),
+  height: canvas.height,
+  scale: 2.5,
+  frames_max: 6
 });
 
 const player = new Fighter({
